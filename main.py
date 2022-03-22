@@ -1,9 +1,16 @@
+from pdb import post_mortem
 from flask import Flask,render_template
+import requests
+
+post=requests.get("https://api.npoint.io/65036dfcf8a72fc447aa").json()
 
 app=Flask(__name__)
 @app.route('/',methods=['GET','POST'])
 def home():
-    return render_template('index.html')
+    print(post)
+    for i in post:
+        print(i)
+    return render_template('index.html',all_posts=post)
 
 @app.route("/about")
 def about():
