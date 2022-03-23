@@ -1,6 +1,6 @@
-from pdb import post_mortem
-from flask import Flask,render_template
+from flask import Flask,render_template, request
 import requests
+
 
 posts=requests.get("https://api.npoint.io/65036dfcf8a72fc447aa").json()
 
@@ -13,8 +13,17 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route("/contact")
+@app.route("/contact",methods=["GET","POST"])
 def contact():
+    if request.method=="POST":
+        data=request.form
+        print(data["name"])
+        print(data["email"])
+        print(data["phone"])
+        print(data["message"])
+
+        return render_template("contact.html",msg=True)
+
     return render_template("contact.html")
 
 @app.route("/post/<int:index>")
